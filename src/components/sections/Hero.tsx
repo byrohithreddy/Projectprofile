@@ -22,9 +22,11 @@ export default function Hero() {
               
               <div className="flex flex-wrap gap-4">
                 <a 
-                  href="https://drive.google.com/file/d/1XuxZFqS5P0K7mLmBOE0U9dFBw7w_gT5b/view?usp=drive_link"
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    window.open('https://drive.google.com/file/d/1XuxZFqS5P0K7mLmBOE0U9dFBw7w_gT5b/preview', 'Resume', 'width=800,height=600');
+                  }}
                   className="inline-flex items-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-sm transition-all"
                 >
                   <FileText size={18} className="mr-2" />
