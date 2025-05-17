@@ -12,7 +12,7 @@ export default function About() {
           <div className="h-1 w-20 bg-indigo-600 dark:bg-indigo-400 mx-auto mb-8"></div>
         </div>
         
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto text-center">
           <p className="text-gray-700 dark:text-gray-300 text-lg leading-relaxed mb-6 animate-fade-in">
             I'm an undergraduate Computer Science student with a passion for building innovative technology solutions. My journey in programming began during high school, and I've been expanding my skills ever since.
           </p>

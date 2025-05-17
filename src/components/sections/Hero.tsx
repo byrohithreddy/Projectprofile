@@ -8,7 +8,7 @@ export default function Hero() {
     >
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row items-center gap-10 md:gap-16">
-          <div className="flex-1 order-2 md:order-1">
+          <div className="flex-1 order-2 md:order-1 text-center md:text-left">
             <div className="animate-fade-in-up">
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-4 transition-colors">
                 ROHITH REDDY MUSHKE
@@ -16,11 +16,11 @@ export default function Hero() {
               <h2 className="text-xl md:text-2xl text-indigo-600 dark:text-indigo-400 mb-6 transition-colors">
                 Aspiring Data Science Engineer | AI Enthusiast | Lifelong Learner
               </h2>
-              <p className="text-gray-700 dark:text-gray-300 mb-8 max-w-xl transition-colors">
+              <p className="text-gray-700 dark:text-gray-300 mb-8 max-w-xl mx-auto md:mx-0 transition-colors">
                 Passionate about AI, Data Science, and creating innovative solutions that make a difference.
               </p>
               
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-4 justify-center md:justify-start">
                 <a 
                   href="#"
                   onClick={(e) => {
