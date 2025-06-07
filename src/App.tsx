@@ -7,7 +7,6 @@ import About from './components/sections/About';
 import Projects from './components/sections/Projects';
 import Skills from './components/sections/Skills';
 import Contact from './components/sections/Contact';
-import ChatBot from './components/ChatBot';
 import './utils/animations.css';
 
 function App() {
@@ -28,7 +27,6 @@ function App() {
           <Contact />
         </main>
         <Footer />
-        <ChatBot />
       </div>
     </ThemeProvider>
   );
