@@ -315,9 +315,7 @@ function App() {
           loop={false}
           startOnVisible
         />
-        <div className="achievement-stack-wrapper">
         <AchievementStack />
-        </div>
       </section>
       <section className="contact" id="contact">
         <TextType
