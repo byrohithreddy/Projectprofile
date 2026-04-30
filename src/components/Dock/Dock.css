@@ -1,0 +1,97 @@
+.dock-outer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  display: flex;
+  max-width: 100%;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.dock-panel {
+  position: relative;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: flex-end;
+  width: fit-content;
+  gap: 1rem;
+  border-radius: 1.35rem 1.5rem 1.25rem 1.45rem;
+  padding: 0.35rem 0.55rem 0.55rem;
+  pointer-events: auto;
+  background: rgba(18, 15, 23, 0.7);
+  border: 1px solid rgba(192, 132, 252, 0.3);
+  backdrop-filter: blur(16px);
+  box-shadow:
+    0 20px 48px rgba(0, 0, 0, 0.5),
+    0 8px 18px rgba(0, 0, 0, 0.32),
+    inset 0 2px 3px rgba(255, 255, 255, 0.1),
+    inset 0 -5px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dock-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1rem 1.1rem 0.95rem 1.05rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.22),
+    inset 0 2px 2px rgba(255, 255, 255, 0.1),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  outline: none;
+}
+
+.dock-item:hover,
+.dock-item:focus-visible {
+  background: rgba(192, 132, 252, 0.2);
+  border-color: rgba(192, 132, 252, 0.5);
+  box-shadow:
+    0 8px 18px rgba(0, 0, 0, 0.28),
+    inset 0 2px 3px rgba(255, 255, 255, 0.2),
+    inset 0 -3px 8px rgba(0, 0, 0, 0.05);
+}
+
+.dock-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.dock-label {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  width: fit-content;
+  white-space: pre;
+  border-radius: 0.55rem 0.6rem 0.5rem 0.55rem;
+  border: 1px solid rgba(192, 132, 252, 0.45);
+  background: rgba(18, 15, 23, 0.9);
+  padding: 0.2rem 0.55rem;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  transform: translateX(-50%);
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 640px) {
+  .dock-panel {
+    gap: 0.55rem;
+    max-width: calc(100vw - 1.5rem);
+    padding: 0.3rem 0.45rem 0.45rem;
+  }
+
+  .dock-label {
+    display: none;
+  }
+}

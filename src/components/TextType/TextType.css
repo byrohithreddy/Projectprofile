@@ -1,0 +1,64 @@
+.text-type {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: left;
+  white-space: pre-wrap;
+  background: transparent;
+}
+
+.text-type__content {
+  font-family: ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(1.5rem, 4.2vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  max-width: 100%;
+  white-space: pre-wrap;
+  background: transparent;
+}
+
+.text-type__cursor {
+  margin-left: 0.25rem;
+  display: inline-block;
+  opacity: 1;
+  color: inherit;
+}
+
+.text-type__cursor--hidden {
+  display: none;
+}
+
+.hero {
+  font-size: clamp(1.5rem, 4.2vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  max-width: 100%;
+  white-space: pre-wrap;
+  background: transparent;
+}
+
+.hero .text-type__content {
+  font-family: 'Game', 'Surgena', ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: 30px;
+}
+
+.heading {
+  font-family: 'Surgena', Surgena, ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(1.5rem, 4.2vw, 2.15rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.03em;
+  max-width: 100%;
+  width: 100%;
+  display: flex;
+  white-space: pre-wrap;
+  background: transparent;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.heading .text-type__content {
+  font-family: 'Surgena', Surgena, ui-rounded, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
