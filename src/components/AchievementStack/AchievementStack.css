@@ -137,3 +137,8 @@
     min-height: 230px;
   }
 }
+.achievement-stack-wrapper {
+  isolation: isolate;
+  position: relative;
+  z-index: 0;
+}
