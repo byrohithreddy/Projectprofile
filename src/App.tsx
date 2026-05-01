@@ -122,6 +122,13 @@ function App() {
   const [repos, setRepos] = useState<number | null>(null);
   const [username, setUsername] = useState('');
   const [activeProject, setActiveProject] = useState(0);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 900);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     fetch(`https://api.github.com/users/${GITHUB_USERNAME}`)
@@ -237,37 +244,66 @@ function App() {
           startOnVisible
         />
 
-        <div className="projects-layout">
-          {/* LEFT: description panel */}
-          <div className="projects-info">
+        {isMobile ? (
+          <div className="projects-mobile-layout">
             {PROJECTS.map((p, i) => (
-              <ProjectPanel key={i} project={p} visible={activeProject === i} />
-            ))}
-          </div>
-
-          {/* RIGHT: card swap */}
-          <CardSwap
-            width={620}
-            height={390}
-            cardDistance={52}
-            verticalDistance={50}
-            delay={5000}
-            pauseOnHover={true}
-            skewAmount={6}
-            onActiveChange={setActiveProject}
-          >
-            {PROJECTS.map((p, i) => (
-              <Card key={i} customClass="project-card">
-                <a href={p.live} target="_blank" rel="noreferrer" className="project-card-img-link">
-                  <img src={p.image} alt={p.title} className="project-card-img" />
-                  <div className="project-card-img-overlay">
+              <div key={i} className="mobile-project-item">
+                <a href={p.live} target="_blank" rel="noreferrer" className="mobile-project-img-link">
+                  <img src={p.image} alt={p.title} className="mobile-project-img" />
+                  <div className="mobile-project-img-overlay">
                     <span>View Live →</span>
                   </div>
                 </a>
-              </Card>
+                <div className="mobile-project-info">
+                  <a href={p.github} target="_blank" rel="noreferrer" className="project-panel-title">
+                    {p.title}
+                  </a>
+                  <p className="project-panel-desc">{p.desc}</p>
+                  <div className="project-panel-tags">
+                    {p.tags.map((tag) => (
+                      <span key={tag} className="project-tag">{tag}</span>
+                    ))}
+                  </div>
+                  <a href={p.github} target="_blank" rel="noreferrer" className="project-btn">
+                    GitHub Repo <VscVscodeInsiders size={20} />
+                  </a>
+                </div>
+              </div>
             ))}
-          </CardSwap>
-        </div>
+          </div>
+        ) : (
+          <div className="projects-layout">
+            {/* LEFT: description panel */}
+            <div className="projects-info">
+              {PROJECTS.map((p, i) => (
+                <ProjectPanel key={i} project={p} visible={activeProject === i} />
+              ))}
+            </div>
+
+            {/* RIGHT: card swap */}
+            <CardSwap
+              width={620}
+              height={390}
+              cardDistance={52}
+              verticalDistance={50}
+              delay={5000}
+              pauseOnHover={true}
+              skewAmount={6}
+              onActiveChange={setActiveProject}
+            >
+              {PROJECTS.map((p, i) => (
+                <Card key={i} customClass="project-card">
+                  <a href={p.live} target="_blank" rel="noreferrer" className="project-card-img-link">
+                    <img src={p.image} alt={p.title} className="project-card-img" />
+                    <div className="project-card-img-overlay">
+                      <span>View Live →</span>
+                    </div>
+                  </a>
+                </Card>
+              ))}
+            </CardSwap>
+          </div>
+        )}
       </div>
       <div className="skills" id="skills">
         <TextType
