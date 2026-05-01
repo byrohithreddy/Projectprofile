@@ -9,8 +9,26 @@ const PACKAGES = [
   "Data Analyst",
 ];
 
-function detectBrowser(): string {
+async function detectBrowser(): Promise<string> {
   const ua = navigator.userAgent;
+
+  // Brave must be checked first — its UA contains "Chrome"
+  if ((navigator as any).brave?.isBrave) {
+    try {
+      const isBrave = await (navigator as any).brave.isBrave();
+      if (isBrave) {
+        const v = ua.match(/Chrome\/([\d.]+)/)?.[1] ?? "";
+        return `Brave Browser [ ${v} ]`;
+      }
+    } catch {
+      // brave check failed, fall through
+    }
+  }
+
+  if (ua.includes("OPR") || ua.includes("Opera")) {
+    const v = ua.match(/OPR\/([\d.]+)/)?.[1] ?? "";
+    return `Opera [ ${v} ]`;
+  }
   if (ua.includes("Edg")) {
     const v = ua.match(/Edg\/([\d.]+)/)?.[1] ?? "";
     return `Microsoft Edge [ ${v} ]`;
@@ -38,12 +56,15 @@ export default function LoadingScreen({ onFinish }: Props) {
   const [phase, setPhase] = useState<Phase>("browser");
   const [installedCount, setInstalledCount] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
-  const browser = detectBrowser();
+  const [browser, setBrowser] = useState("Detecting...");
+
+  // Async browser detection
+  useEffect(() => {
+    detectBrowser().then(setBrowser);
+  }, []);
 
   useEffect(() => {
-    // browser → prompt
     const t1 = setTimeout(() => setPhase("prompt"), 800);
-    // prompt → packages (after TextType finishes ~1.5s)
     const t2 = setTimeout(() => setPhase("packages"), 2400);
     return () => { clearTimeout(t1); clearTimeout(t2); };
   }, []);
@@ -55,10 +76,9 @@ export default function LoadingScreen({ onFinish }: Props) {
         setInstalledCount((c) => c + 1);
       }, i * 800 + 200);
     });
-    // after all packages, fade out
     const t = setTimeout(() => {
       setFadeOut(true);
-      setTimeout(onFinish, 800); // match fade duration
+      setTimeout(onFinish, 800);
     }, PACKAGES.length * 800 + 1000);
     return () => clearTimeout(t);
   }, [phase, onFinish]);
@@ -106,12 +126,12 @@ export default function LoadingScreen({ onFinish }: Props) {
       )}
 
       {/* vite output header */}
-      {phase === "packages" || installedCount > 0 ? (
+      {(phase === "packages" || installedCount > 0) && (
         <p style={{ color: "#555", fontSize: "0.8em", marginBottom: "0.75rem" }}>
           &gt; portfolio@1.0.0 dev<br />
           &gt; vite
         </p>
-      ) : null}
+      )}
 
       {/* Package install lines */}
       {PACKAGES.slice(0, installedCount).map((pkg) => (
