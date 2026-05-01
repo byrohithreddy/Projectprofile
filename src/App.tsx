@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import LoadingScreen from './components/LoadingScreen/LoadingScreen';
 import { VscCode, VscHome, VscVscodeInsiders, VscHistory, VscGraph, VscMail } from 'react-icons/vsc';
 import Dock from './components/Dock/Dock';
 import Lanyard from './components/Lanyard/Lanyard';
@@ -119,6 +120,7 @@ function ProjectPanel({ project, visible }: { project: Project; visible: boolean
 }
 
 function App() {
+  const [loaded, setLoaded] = useState(false);
   const [repos, setRepos] = useState<number | null>(null);
   const [username, setUsername] = useState('');
   const [activeProject, setActiveProject] = useState(0);
@@ -153,7 +155,16 @@ function App() {
   ];
 
   return (
-    <div className="app">
+    <>
+      {!loaded && <LoadingScreen onFinish={() => setLoaded(true)} />}
+      <div 
+        className="app"
+        style={{
+          opacity: loaded ? 1 : 0,
+          transition: "opacity 0.8s ease 0.1s",
+          pointerEvents: loaded ? 'auto' : 'none'
+        }}
+      >
       <Particles
         className="particles-bg"
         particleColors={['#c084fc', '#a78bfa', '#e9d5ff']}
@@ -396,7 +407,8 @@ function App() {
       <div className="dock-root">
         <Dock items={dockItems} panelHeight={68} baseItemSize={50} magnification={70} />
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
