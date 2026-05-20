@@ -16,6 +16,7 @@ import githubImg from './assets/github.png';
 import linkedinImg from './assets/linkdin.png';
 import mailImg from './assets/mail.png';
 import movieImg from './assets/movie.png';
+import PIImg from './assets/pi.png';
 import newsImg from './assets/news.png';
 import resumeImg from './assets/resume.png';
 import { MdOutlineAutoGraph } from "react-icons/md";
@@ -73,6 +74,14 @@ const PROJECTS = [
     tags: ['React', 'Node.js', 'Barcode', 'Full-Stack'],
     image: gateImg,
   },
+  {
+    title: 'Free Payment interface',
+    github: 'https://github.com/byrohithreddy/Free-pi',
+    live: 'https://free-pi.pages.dev/',
+    desc: 'Free, open, developer-friendly UPI orchestration for Indian merchants. No transaction fees. No monthly charges. No hidden costs. Fast-tracked payment verification & collection system for payments below ₹2,000.',
+    tags: ['React', 'Node.js', 'Barcode', 'Full-Stack'],
+    image: PIImg,
+  }
 ];
 type Project = {
   title: string;
