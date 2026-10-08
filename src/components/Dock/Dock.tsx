@@ -15,6 +15,7 @@ const defaultSpring = { mass: 0.1, stiffness: 150, damping: 12 };
 export type DockItemConfig = {
   icon: ReactNode;
   label: string;
+  active?: boolean;
   onClick?: () => void;
   className?: string;
 };
@@ -22,6 +23,7 @@ export type DockItemConfig = {
 type DockItemProps = {
   icon: ReactNode;
   label: string;
+  active?: boolean;
   className?: string;
   onClick?: () => void;
   mouseX: MotionValue<number>;
@@ -34,6 +36,7 @@ type DockItemProps = {
 function DockItem({
   icon,
   label,
+  active = false,
   className = '',
   onClick,
   mouseX,
@@ -69,12 +72,14 @@ function DockItem({
       onFocus={() => labelHover.set(1)}
       onBlur={() => labelHover.set(0)}
       onClick={onClick}
-      className={`dock-item ${className}`}
+      className={`dock-item ${active ? 'dock-item--active' : ''} ${className}`}
       tabIndex={0}
       role="button"
       aria-label={label}
+      aria-pressed={active}
     >
       <DockIcon>{icon}</DockIcon>
+      {active && <span className="dock-item__active-dot" aria-hidden="true" />}
       <DockLabel isHovered={labelHover}>{label}</DockLabel>
     </motion.div>
   );
@@ -103,7 +108,7 @@ function DockLabel({ children, className = '', isHovered }: DockLabelProps) {
           initial={{ opacity: 0, y: 0 }}
           animate={{ opacity: 1, y: -10 }}
           exit={{ opacity: 0, y: 0 }}
-          transition={{ duration: 0.2 }}
+          transition={{ duration: 0.18 }}
           className={`dock-label ${className}`}
           role="tooltip"
         >
@@ -170,6 +175,7 @@ export default function Dock({
             key={index}
             icon={item.icon}
             label={item.label}
+            active={item.active}
             onClick={item.onClick}
             className={item.className}
             mouseX={mouseX}

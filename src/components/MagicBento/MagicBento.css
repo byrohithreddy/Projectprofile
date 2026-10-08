@@ -1,0 +1,248 @@
+:root {
+  --bento-glow-color: 56, 189, 248;
+}
+
+.magic-bento-wrapper {
+  position: relative;
+  width: min(100%, 1280px);
+  margin: 2rem auto 0;
+  user-select: none;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.magic-bento-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  min-height: 420px;
+  width: 100%;
+  max-width: 100%;
+  padding: 2.2rem;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(14, 16, 25, 0.78);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 24px 60px rgba(0, 0, 0, 0.6);
+  color: #f8fafc;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 260px;
+}
+
+.magic-bento-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 30px 72px rgba(0, 0, 0, 0.75);
+}
+
+/* ── Dynamic Self-Adjusting Column Spans ── */
+.magic-bento-card--span-7 {
+  grid-column: span 7;
+}
+
+.magic-bento-card--span-5 {
+  grid-column: span 5;
+}
+
+.magic-bento-card--span-12 {
+  grid-column: span 12;
+}
+
+/* ── Card Header & Eyebrow Label ── */
+.magic-bento-card__header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.magic-bento-card__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #94a3b8;
+}
+
+/* ── Text Content ── */
+.magic-bento-card__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-width: 620px;
+}
+
+.magic-bento-card__title {
+  margin: 0;
+  font-family: Surgena, -apple-system, sans-serif;
+  font-size: clamp(1.45rem, 2.4vw, 1.95rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.magic-bento-card__description {
+  margin: 0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 0.94rem;
+  line-height: 1.6;
+  color: #94a3b8;
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__title,
+.magic-bento-card--text-autohide .magic-bento-card__description {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__title {
+  -webkit-line-clamp: 1;
+  line-clamp: 1;
+}
+
+.magic-bento-card--text-autohide .magic-bento-card__description {
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+}
+
+/* ── Project Showcase Image Mockup ── */
+.magic-bento-card__media {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 1.6rem;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #06070a;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5);
+  aspect-ratio: 2.2 / 1;
+}
+
+.magic-bento-card--span-5 .magic-bento-card__media {
+  aspect-ratio: 1.85 / 1;
+}
+
+.magic-bento-card__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 18px;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.magic-bento-card:hover .magic-bento-card__img {
+  transform: scale(1.035);
+}
+
+/* ── React Bits Border Glow Effect ── */
+.magic-bento-card--border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(var(--glow-color, 56, 189, 248), calc(var(--glow-intensity) * 0.85)) 0%,
+    rgba(var(--glow-color, 56, 189, 248), calc(var(--glow-intensity) * 0.35)) 30%,
+    transparent 65%
+  );
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+}
+
+.magic-bento-card--border-glow:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 24px 64px rgba(0, 0, 0, 0.7),
+    0 0 28px rgba(var(--glow-color, 56, 189, 248), 0.12);
+}
+
+/* ── Particle Stars Effect ── */
+.particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.magic-particle::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: rgba(var(--glow-color, 56, 189, 248), 0.3);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* ── Global Cursor Spotlight ── */
+.global-spotlight {
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  z-index: 200 !important;
+  pointer-events: none;
+}
+
+/* ── Responsive Behavior ── */
+@media (max-width: 1024px) {
+  .card-grid {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 1.25rem;
+  }
+
+  .magic-bento-card--span-7,
+  .magic-bento-card--span-5,
+  .magic-bento-card--span-12 {
+    grid-column: span 1;
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .magic-bento-card {
+    padding: 1.5rem;
+    border-radius: 20px;
+  }
+
+  .magic-bento-card__media {
+    aspect-ratio: 1.6 / 1;
+  }
+}

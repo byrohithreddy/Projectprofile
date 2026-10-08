@@ -1,0 +1,353 @@
+.apple-bento-wrapper {
+  width: min(100%, 1240px);
+  margin: 2rem auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Header bar with Apple-style indicators */
+.apple-bento-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+
+.apple-bento-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: #94a3b8;
+  letter-spacing: 0.02em;
+}
+
+.apple-bento-status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: bento-pulse 2s infinite ease-in-out;
+}
+
+@keyframes bento-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.85);
+  }
+}
+
+.apple-bento-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.apple-bento-control-dot {
+  width: 24px;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.16);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.25s ease;
+}
+
+.apple-bento-control-dot--active {
+  background: #ffffff;
+  width: 32px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+}
+
+.apple-bento-rotate-btn {
+  margin-left: 8px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.apple-bento-rotate-btn:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* ── Asymmetric Bento Grid Matrix ── */
+.apple-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
+  perspective: 1200px;
+}
+
+/* Apple Bento Cell Base */
+.apple-bento-cell {
+  position: relative;
+  display: flex;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  background: rgba(16, 18, 27, 0.82);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow:
+    0 24px 64px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(24px) saturate(130%);
+  -webkit-backdrop-filter: blur(24px) saturate(130%);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.apple-bento-cell:hover {
+  border-color: rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.7),
+    0 0 32px rgba(56, 189, 248, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+/* Slot Layouts (Apple Keynote rhythm) */
+/* Slot 0: Wide Hero Card (7 cols) */
+.apple-bento-cell--slot-0 {
+  grid-column: span 7;
+  min-height: 380px;
+  flex-direction: row;
+}
+
+.apple-bento-cell--slot-0 .apple-bento-content {
+  flex: 1 1 55%;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.apple-bento-cell--slot-0 .apple-bento-media {
+  flex: 1 1 45%;
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Slot 1: Tall Card (5 cols) */
+.apple-bento-cell--slot-1 {
+  grid-column: span 5;
+  min-height: 380px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.apple-bento-cell--slot-1 .apple-bento-content {
+  padding: 2.2rem 2.2rem 1.2rem;
+}
+
+.apple-bento-cell--slot-1 .apple-bento-media {
+  padding: 0 1.5rem 1.5rem;
+  height: 180px;
+}
+
+/* Slot 2: Compact Card (5 cols) */
+.apple-bento-cell--slot-2 {
+  grid-column: span 5;
+  min-height: 360px;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.apple-bento-cell--slot-2 .apple-bento-content {
+  padding: 2.2rem 2.2rem 1.2rem;
+}
+
+.apple-bento-cell--slot-2 .apple-bento-media {
+  padding: 0 1.5rem 1.5rem;
+  height: 170px;
+}
+
+/* Slot 3: Wide Showcase Card (7 cols) */
+.apple-bento-cell--slot-3 {
+  grid-column: span 7;
+  min-height: 360px;
+  flex-direction: row;
+}
+
+.apple-bento-cell--slot-3 .apple-bento-content {
+  flex: 1 1 55%;
+  padding: 2.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.apple-bento-cell--slot-3 .apple-bento-media {
+  flex: 1 1 45%;
+  padding: 1.5rem 1.5rem 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Typography & Metadata ── */
+.apple-bento-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 0.8rem;
+}
+
+.apple-bento-category {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #38bdf8;
+}
+
+.apple-bento-highlight {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 3px 8px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #cbd5e1;
+}
+
+.apple-bento-title {
+  margin: 0 0 0.8rem;
+  font-family: Surgena, -apple-system, sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.85rem);
+  line-height: 1.2;
+  color: #f8fafc;
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.apple-bento-cell:hover .apple-bento-title {
+  color: #ffffff;
+}
+
+.apple-bento-desc {
+  margin: 0 0 1.25rem;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #94a3b8;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.apple-bento-tags-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #64748b;
+  margin-top: auto;
+  transition: color 0.2s ease;
+}
+
+.apple-bento-cell:hover .apple-bento-tags-text {
+  color: #94a3b8;
+}
+
+/* ── Media Frame ── */
+.apple-bento-media {
+  position: relative;
+  width: 100%;
+}
+
+.apple-bento-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 18px;
+  background: #08090f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  transition: transform 0.35s ease, filter 0.35s ease;
+}
+
+.apple-bento-cell:hover .apple-bento-img {
+  transform: scale(1.025);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
+/* Specular glow reflection */
+.apple-bento-glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 255, 255, 0.06),
+    transparent 65%
+  );
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.apple-bento-cell:hover .apple-bento-glow {
+  opacity: 1;
+}
+
+/* Bottom hint */
+.apple-bento-footer-hint {
+  text-align: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  color: #64748b;
+  letter-spacing: 0.02em;
+  margin-top: 0.5rem;
+}
+
+/* ── Responsive Bento ── */
+@media (max-width: 960px) {
+  .apple-bento-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .apple-bento-cell--slot-0,
+  .apple-bento-cell--slot-1,
+  .apple-bento-cell--slot-2,
+  .apple-bento-cell--slot-3 {
+    grid-column: span 12;
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .apple-bento-cell--slot-0 .apple-bento-content,
+  .apple-bento-cell--slot-3 .apple-bento-content {
+    padding: 1.75rem 1.5rem 1rem;
+  }
+
+  .apple-bento-cell--slot-0 .apple-bento-media,
+  .apple-bento-cell--slot-1 .apple-bento-media,
+  .apple-bento-cell--slot-2 .apple-bento-media,
+  .apple-bento-cell--slot-3 .apple-bento-media {
+    padding: 0 1.5rem 1.5rem;
+    height: 220px;
+  }
+}
