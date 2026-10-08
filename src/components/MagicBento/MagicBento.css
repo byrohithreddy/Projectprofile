@@ -238,11 +238,29 @@
 
 @media (max-width: 640px) {
   .magic-bento-card {
-    padding: 1.5rem;
+    padding: 1.35rem 1.15rem;
     border-radius: 20px;
   }
 
+  .magic-bento-card__title {
+    font-size: clamp(1.3rem, 5.5vw, 1.65rem);
+  }
+
+  .magic-bento-card__description {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
   .magic-bento-card__media {
-    aspect-ratio: 1.6 / 1;
+    margin-top: 1.25rem;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+  }
+}
+
+@media (max-width: 420px) {
+  .magic-bento-card {
+    padding: 1.15rem 0.95rem;
+    border-radius: 18px;
   }
 }

@@ -186,3 +186,38 @@
     grid-row: auto;
   }
 }
+
+@media (max-width: 480px) {
+  .growth-timeline {
+    margin-top: 2rem;
+  }
+
+  .growth-timeline::before {
+    left: 20px;
+  }
+
+  .growth-timeline__item {
+    padding-left: 50px;
+    margin-bottom: 2rem;
+  }
+
+  .growth-timeline__marker {
+    left: 2px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .growth-timeline__card {
+    padding: 1.15rem 1.2rem;
+    border-radius: 18px;
+  }
+
+  .growth-timeline__title {
+    font-size: 1.12rem;
+  }
+
+  .growth-timeline__detail {
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+}

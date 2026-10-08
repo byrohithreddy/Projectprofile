@@ -451,17 +451,54 @@
 @media (max-width: 900px) {
   .contact-layout-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
 }
 
 @media (max-width: 600px) {
   .contact-form-card {
-    padding: 1.4rem;
+    padding: 1.35rem 1.1rem;
+    border-radius: 20px;
   }
+
   .contact-form-row {
     grid-template-columns: 1fr;
+    gap: 0.85rem;
   }
+
+  .contact-input,
+  .contact-textarea {
+    font-size: 16px; /* Prevents auto-zoom on iOS */
+    padding: 11px 13px;
+  }
+
+  .contact-hub-card {
+    padding: 1.35rem 1.1rem;
+    border-radius: 18px;
+  }
+
+  .contact-hub-title {
+    font-size: 0.95rem;
+  }
+
+  .contact-resume-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .contact-action-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 10px 16px;
+  }
+
   .contact-social-grid {
     grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .contact-submit-btn {
+    width: 100%;
+    padding: 14px 18px;
   }
 }

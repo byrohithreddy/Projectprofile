@@ -197,8 +197,8 @@ function App() {
             orientation="portrait"
             finish="glossy"
             cornerRadius={0.3}
-            size={0.65}
-            strapLength={0.45}
+            size={isMobile ? 0.72 : 0.65}
+            strapLength={isMobile ? 0.38 : 0.45}
             strapWidth={0.65}
             metal="silver"
             interactive={true}
@@ -403,7 +403,13 @@ function App() {
 
         {/* BOTTOM FLOATING DOCK WITH ACTIVE INDICATOR */}
         <div className="dock-root">
-          <Dock items={dockItems} panelHeight={64} baseItemSize={48} magnification={66} />
+          <Dock
+            items={dockItems}
+            panelHeight={isMobile ? 54 : 64}
+            baseItemSize={isMobile ? 38 : 48}
+            magnification={isMobile ? 50 : 66}
+            distance={isMobile ? 140 : 200}
+          />
         </div>
       </div>
     </>
