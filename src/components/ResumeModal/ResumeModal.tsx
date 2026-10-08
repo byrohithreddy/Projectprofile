@@ -48,13 +48,22 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
               <div className="resume-modal-actions">
                 <a
                   href={RESUME_URL}
+                  download="Mushke_Rohith_Reddy_Resume.pdf"
+                  className="resume-modal-btn resume-modal-btn--primary"
+                  title="Download PDF"
+                >
+                  <HiDownload size={16} />
+                  <span>Download</span>
+                </a>
+                <a
+                  href={RESUME_URL}
                   target="_blank"
                   rel="noreferrer"
                   className="resume-modal-btn resume-modal-btn--primary"
                   title="Open in new window"
                 >
                   <HiExternalLink size={16} />
-                  <span>Open Fullscreen</span>
+                  <span>Open in Tab</span>
                 </a>
                 <button
                   type="button"
@@ -69,12 +78,18 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
 
             {/* Modal Iframe Viewer */}
             <div className="resume-modal-body">
-              <iframe
-                src={RESUME_URL}
-                title="Mushke Rohith Reddy Resume Preview"
+              <object
+                data={`${RESUME_URL}#toolbar=0`}
+                type="application/pdf"
                 className="resume-modal-iframe"
-                loading="lazy"
-              />
+                title="Mushke Rohith Reddy Resume Preview"
+              >
+                <iframe
+                  src={`${RESUME_URL}#toolbar=0`}
+                  title="Mushke Rohith Reddy Resume Preview"
+                  className="resume-modal-iframe"
+                />
+              </object>
             </div>
           </motion.div>
         </div>

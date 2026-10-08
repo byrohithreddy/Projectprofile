@@ -23,10 +23,11 @@ import pythonImg from '../assets/python.png';
 import reactImg from '../assets/react.png';
 import sqlImg from '../assets/sql.png';
 import vscodeImg from '../assets/vscode.png';
+import resumePdf from '../assets/cv.pdf';
 
 export const GITHUB_USERNAME = 'byrohithreddy';
 export const EMAIL_ADDRESS = 'rohith2005hyd@gmail.com';
-export const RESUME_URL = 'https://drive.google.com/file/d/1XuxZFqS5P0K7mLmBOE0U9dFBw7w_gT5b/preview';
+export const RESUME_URL = resumePdf;
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/mushkerohithreddy';
 export const GITHUB_URL = 'https://github.com/byrohithreddy';
 
