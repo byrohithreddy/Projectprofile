@@ -107,7 +107,7 @@ interface Body {
 interface Grab {
   local: THREE.Vector3;
   rotation: THREE.Quaternion;
-  reach: number;
+  planeZ: number;
   from: THREE.Vector3;
   target: THREE.Vector3;
 }
@@ -1086,9 +1086,18 @@ const Lanyard = ({
       const minimumWidth = layout.width / 0.72;
       if (viewHeight * aspect < minimumWidth) viewHeight = minimumWidth / aspect;
       const viewWidth = viewHeight * aspect;
+
+      const fullWidth = Math.max(1, canvas.clientWidth || window.innerWidth || view.width);
+      const fullHeight = Math.max(1, canvas.clientHeight || window.innerHeight || view.height);
+      const containerRect = container.getBoundingClientRect();
+      const canvasRect = canvas.getBoundingClientRect();
+      const offsetX = containerRect.left - canvasRect.left;
+      const offsetY = containerRect.top - canvasRect.top;
+
       camera.aspect = aspect;
       camera.position.set(0, 0, viewHeight / 2 / Math.tan((FOV * Math.PI) / 360));
       camera.lookAt(0, 0, 0);
+      camera.setViewOffset(view.width, view.height, -offsetX, -offsetY, fullWidth, fullHeight);
       camera.updateProjectionMatrix();
       camera.updateMatrixWorld();
       foilUniforms.foilKey.value.set(-2.5, 4, 6).normalize().transformDirection(camera.matrixWorldInverse);
@@ -1102,6 +1111,16 @@ const Lanyard = ({
       configureSimulation(sim, layout, anchorY - hangTop);
       sim.nodes[0].copy(sim.anchor);
       sim.previous[0].copy(sim.anchor);
+    };
+
+    const syncScrollOffset = () => {
+      const containerRect = container.getBoundingClientRect();
+      const offsetX = containerRect.left;
+      const offsetY = containerRect.top;
+      const fullWidth = Math.max(1, canvas.clientWidth || window.innerWidth || view.width);
+      const fullHeight = Math.max(1, canvas.clientHeight || window.innerHeight || view.height);
+      camera.setViewOffset(view.width, view.height, -offsetX, -offsetY, fullWidth, fullHeight);
+      camera.updateProjectionMatrix();
     };
 
     const apply = () => {
@@ -1122,7 +1141,7 @@ const Lanyard = ({
         ring.position.set(0, layout.ringY, 0);
         applied.framingKey = '';
       }
-      const framingKey = `${layoutKey}|${s.size}|${s.anchor}|${s.strapLength}|${view.width}|${view.height}`;
+      const framingKey = `${layoutKey}|${s.size}|${s.anchor}|${s.strapLength}|${view.width}|${view.height}|${canvas.clientWidth}|${canvas.clientHeight}`;
       if (framingKey !== applied.framingKey) {
         frameView();
         if (!placed) {
@@ -1219,7 +1238,7 @@ const Lanyard = ({
       const columns = BAND_COLUMNS.length;
       const restLength = sim.rest * JOINTS;
       const repeats = restLength / (strapScale * tileRatio);
-      const width = strapScale / Math.pow(Math.max(1, length / Math.max(restLength, 0.001)), 0.35);
+      const width = strapScale / Math.pow(Math.max(1, length / Math.max(restLength, 0.001)), 0.15);
       const { tangent, toCamera, across, facing } = work;
       for (let i = 0; i < SAMPLES; i++) {
         tangent.subVectors(points[Math.min(SAMPLES - 1, i + 1)], points[Math.max(0, i - 1)]);
@@ -1275,16 +1294,17 @@ const Lanyard = ({
       const weight = Math.max(gravity, 20);
       const springy = clamp(s.elasticity, 0, 1);
       const settle = clamp(s.damping, 0, 1);
+      const dragging = !!sim.grab;
       return {
         gravity,
-        hold: weight * mix(2.2, 5.5, springy),
-        stiffness: weight * 10 * JOINTS,
-        spring: weight * mix(0.1, 0.4, springy) * JOINTS,
+        hold: dragging ? weight * 0.45 : weight * mix(2.2, 5.5, springy),
+        stiffness: dragging ? weight * 2.5 * JOINTS : weight * 10 * JOINTS,
+        spring: dragging ? weight * 0.08 * JOINTS : weight * mix(0.25, 0.65, springy) * JOINTS,
         bandDamping: weight * mix(0.3, 0.08, springy) * JOINTS,
-        linearDrag: 0.25 * Math.pow(16, settle),
+        linearDrag: dragging ? 0.15 : 0.25 * Math.pow(16, settle),
         angularDrag: 0.5 * Math.pow(12, settle),
-        air: 0.15,
-        broadside: 0.5,
+        air: dragging ? 0.04 : 0.15,
+        broadside: dragging ? 0.12 : 0.5,
         spinAir: 0.03,
         nodeDrag: 2,
         nodeAir: 0.2,
@@ -1311,11 +1331,11 @@ const Lanyard = ({
       }
       render();
       const resting = sim.calm > 1.2 && !sim.grab && current.breeze === 0;
-      if (visible && !resting) raf = requestAnimationFrame(tick);
+      if (!resting) raf = requestAnimationFrame(tick);
     };
 
     const start = () => {
-      if (raf || !visible || !alive) return;
+      if (raf || !alive) return;
       sim.calm = 0;
       last = performance.now();
       raf = requestAnimationFrame(tick);
@@ -1323,6 +1343,9 @@ const Lanyard = ({
 
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
+    let lastClientX = 0;
+    let lastClientY = 0;
+    let autoScrollRaf = 0;
 
     const toPointer = (event: Point) => {
       const rect = canvas.getBoundingClientRect();
@@ -1340,7 +1363,7 @@ const Lanyard = ({
     };
 
     const setCursor = (value: string) => {
-      if (canvas.style.cursor !== value) canvas.style.cursor = value;
+      if (document.body.style.cursor !== value) document.body.style.cursor = value;
     };
 
     const flip = (point: THREE.Vector3) => {
@@ -1355,31 +1378,87 @@ const Lanyard = ({
       body.angular.addScaledVector(up, FLIP_SPIN * direction);
     };
 
+    const intersectGrabPlane = (planeZ: number, out: THREE.Vector3) => {
+      const dirZ = raycaster.ray.direction.z;
+      if (Math.abs(dirZ) > 1e-6) {
+        const t = (planeZ - raycaster.ray.origin.z) / dirZ;
+        if (t > 0) {
+          raycaster.ray.at(t, out);
+          return;
+        }
+      }
+      raycaster.ray.at(camera.position.z - planeZ, out);
+    };
+
+    const updateGrabTarget = (clientX: number, clientY: number) => {
+      if (!sim.grab) return;
+      toPointer({ clientX, clientY });
+      intersectGrabPlane(sim.grab.planeZ, sim.grab.target);
+      start();
+    };
+
+    const getMaxScrollY = () => {
+      const appEl = container.closest('.app') as HTMLElement | null;
+      const docHeight = appEl ? appEl.scrollHeight : document.documentElement.scrollHeight;
+      return Math.max(0, docHeight - window.innerHeight);
+    };
+
+    const stepAutoScroll = () => {
+      autoScrollRaf = 0;
+      if (!sim.grab) return;
+      const edgeZone = 90;
+      const maxSpeed = 18;
+      const maxScrollY = getMaxScrollY();
+      let deltaY = 0;
+      if (lastClientY > window.innerHeight - edgeZone && window.scrollY < maxScrollY) {
+        const ratio = clamp((lastClientY - (window.innerHeight - edgeZone)) / edgeZone, 0, 1);
+        deltaY = Math.min(ratio * maxSpeed, maxScrollY - window.scrollY);
+      } else if (lastClientY < edgeZone && window.scrollY > 0) {
+        const ratio = clamp((edgeZone - lastClientY) / edgeZone, 0, 1);
+        deltaY = -Math.min(ratio * maxSpeed, window.scrollY);
+      }
+      if (deltaY !== 0) {
+        const prevScroll = window.scrollY;
+        window.scrollBy(0, deltaY);
+        if (window.scrollY !== prevScroll) {
+          syncScrollOffset();
+          updateGrabTarget(lastClientX, lastClientY);
+        }
+      }
+      if (sim.grab) {
+        autoScrollRaf = requestAnimationFrame(stepAutoScroll);
+      }
+    };
+
     const onPointerDown = (event: PointerEvent) => {
       if (!settingsRef.current!.interactive || event.button > 0) return;
       toPointer(event);
       const hit = pickCard();
       if (!hit) return;
+      lastClientX = event.clientX;
+      lastClientY = event.clientY;
       sim.grab = {
         local: hit.point.clone().sub(sim.body.position).applyQuaternion(sim.body.quaternion.clone().invert()),
         rotation: sim.body.quaternion.clone(),
-        reach: hit.distance,
+        planeZ: hit.point.z,
         from: hit.point.clone(),
         target: hit.point.clone()
       };
       press = { x: event.clientX, y: event.clientY, time: performance.now(), point: hit.point.clone() };
-      canvas.setPointerCapture?.(event.pointerId);
       setCursor('grabbing');
       event.preventDefault();
+      if (!autoScrollRaf) autoScrollRaf = requestAnimationFrame(stepAutoScroll);
       start();
     };
 
     const onPointerMove = (event: PointerEvent) => {
       if (!settingsRef.current!.interactive) return;
+      lastClientX = event.clientX;
+      lastClientY = event.clientY;
       toPointer(event);
       if (sim.grab) {
         if (press && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 6) press = null;
-        raycaster.ray.at(sim.grab.reach, sim.grab.target);
+        intersectGrabPlane(sim.grab.planeZ, sim.grab.target);
         start();
         return;
       }
@@ -1391,11 +1470,23 @@ const Lanyard = ({
     const onPointerUp = (event: PointerEvent) => {
       if (!sim.grab) return;
       sim.grab = null;
+      if (autoScrollRaf) {
+        cancelAnimationFrame(autoScrollRaf);
+        autoScrollRaf = 0;
+      }
       if (press && event.type === 'pointerup' && performance.now() - press.time < 450) flip(press.point);
       press = null;
-      canvas.releasePointerCapture?.(event.pointerId);
       setCursor(hovering && event.pointerType !== 'touch' ? 'grab' : '');
       start();
+    };
+
+    const onScroll = () => {
+      syncScrollOffset();
+      if (sim.grab) {
+        updateGrabTarget(lastClientX, lastClientY);
+      } else {
+        render();
+      }
     };
 
     const onTouchStart = (event: TouchEvent) => {
@@ -1404,33 +1495,41 @@ const Lanyard = ({
       if (pickCard()) event.preventDefault();
     };
 
-    canvas.addEventListener('pointerdown', onPointerDown);
-    canvas.addEventListener('pointermove', onPointerMove);
-    canvas.addEventListener('pointerup', onPointerUp);
-    canvas.addEventListener('pointercancel', onPointerUp);
-    canvas.addEventListener('lostpointercapture', onPointerUp);
-    canvas.addEventListener('touchstart', onTouchStart, { passive: false });
+    window.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+    window.addEventListener('pointercancel', onPointerUp);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('touchstart', onTouchStart, { passive: false });
 
     const resize = () => {
       view.width = Math.max(1, container.clientWidth);
       view.height = Math.max(1, container.clientHeight);
+      const docEl = document.documentElement;
+      const pageWidth = Math.max(1, docEl.clientWidth || window.innerWidth);
+      const pageHeight = Math.max(1, window.innerHeight || docEl.clientHeight);
+
+      canvas.style.position = 'fixed';
+      canvas.style.top = '0px';
+      canvas.style.left = '0px';
+      canvas.style.width = `${pageWidth}px`;
+      canvas.style.height = `${pageHeight}px`;
+      canvas.style.pointerEvents = 'none';
+
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-      renderer.setSize(view.width, view.height, false);
+      renderer.setSize(pageWidth, pageHeight, false);
+      syncScrollOffset();
       apply();
       render();
     };
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(container);
-    const intersectionObserver = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      if (visible) start();
-    });
-    intersectionObserver.observe(container);
     const onVisibility = () => {
       if (!document.hidden) start();
     };
     document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('resize', resize, { passive: true });
 
     applyRef.current = apply;
     resize();
@@ -1438,16 +1537,18 @@ const Lanyard = ({
     return () => {
       alive = false;
       cancelAnimationFrame(raf);
+      if (autoScrollRaf) cancelAnimationFrame(autoScrollRaf);
+      document.body.style.cursor = '';
       applyRef.current = null;
       resizeObserver.disconnect();
-      intersectionObserver.disconnect();
       document.removeEventListener('visibilitychange', onVisibility);
-      canvas.removeEventListener('pointerdown', onPointerDown);
-      canvas.removeEventListener('pointermove', onPointerMove);
-      canvas.removeEventListener('pointerup', onPointerUp);
-      canvas.removeEventListener('pointercancel', onPointerUp);
-      canvas.removeEventListener('lostpointercapture', onPointerUp);
-      canvas.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('pointerdown', onPointerDown);
+      window.removeEventListener('pointermove', onPointerMove);
+      window.removeEventListener('pointerup', onPointerUp);
+      window.removeEventListener('pointercancel', onPointerUp);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('touchstart', onTouchStart);
       [bodyMesh, frontMesh, backMesh, ring, clampMesh, eyelet, band].forEach(mesh => mesh.geometry?.dispose());
       [frontMaterial, backMaterial, edgeMaterial, metalMaterial, bandMaterial].forEach(material => material.dispose());
       [frontTexture, backTexture, strapTexture, grain, weave].forEach(texture => texture.dispose());

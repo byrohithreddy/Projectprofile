@@ -94,8 +94,6 @@ body,
   margin: 0 auto;
   padding: 0 clamp(1rem, 3vw, 2.5rem);
   overflow: visible;
-  transform-origin: center center;
-  animation: hero-fall-in 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .text-panel {
@@ -215,21 +213,13 @@ body,
   justify-content: center;
   align-items: center;
   padding: 0;
-  pointer-events: auto;
+  pointer-events: none;
   overflow: visible;
 }
 
 .lanyard-wrap .lanyard-canvas {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100%;
+  max-width: none;
   overflow: visible !important;
-}
-
-.lanyard-wrap .lanyard-canvas canvas {
-  display: block;
-  width: 100% !important;
-  height: 100% !important;
 }
 
 @keyframes hero-fall-in {
