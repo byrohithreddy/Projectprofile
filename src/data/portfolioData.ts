@@ -11,6 +11,7 @@ import gdgImg from '../assets/gdg.jpeg';
 import blitzImg from '../assets/blitz.jpg';
 
 import cssImg from '../assets/css.png';
+import IRONImg from '../assets/ir.png';
 import gitImg from '../assets/git.png';
 import htmlImg from '../assets/html.png';
 import javaImg from '../assets/java.png';
@@ -79,6 +80,16 @@ export interface Project {
 }
 
 export const PROJECTS: Project[] = [
+    {
+    title: 'Institutional Recruitment & Operations Network',
+    github: 'https://github.com/byrohithreddy/I-R-O-N.git',
+    live: 'https://iron-recruitment.pages.dev/',
+    desc: 'I.R.O.N. (Institutional Recruitment & Operations Network) v2.0 is an enterprise-grade campus placement operations platform built for Training & Placement Officers (TPO), Student Coordinators, Corporate Recruiters (HR), and Students.',
+    tags: ['React', 'Node.js', 'Full-Stack'],
+    image: IRONImg,
+    category: 'Operational Infrastructure',
+    highlight: '1500 students, 50+ companies',
+  },
   {
     title: 'Fake News Detector (NLP)',
     github: 'https://github.com/byrohithreddy/Fake_news_detector_NLP',
@@ -88,16 +99,6 @@ export const PROJECTS: Project[] = [
     image: newsImg,
     category: 'Machine Learning • NLP',
     highlight: '85%+ Accuracy',
-  },
-  {
-    title: 'Movie Recommendation System',
-    github: 'https://github.com/byrohithreddy/Movie_recommendation_system',
-    live: 'https://byrohithreddy-movie-recommendation-system.hf.space/',
-    desc: 'Content-based movie recommendation engine utilizing cosine similarity on TF-IDF vectors. Deployed on Hugging Face Spaces with instant similarity discovery.',
-    tags: ['Python', 'NLP', 'NumPy', 'Scikit-learn'],
-    image: movieImg,
-    category: 'Recommendation Engine',
-    highlight: 'TF-IDF Vectors',
   },
   {
     title: 'E-Gatepass Management System',
@@ -211,4 +212,5 @@ export const ACHIEVEMENTS: AchievementItem[] = [
     image: gdgImg,
     href: 'https://www.linkedin.com/posts/mushkerohithreddy_gdg-recon2root-teamwork-activity-7455554205316067328-RPNC',
   },
+  
 ];
