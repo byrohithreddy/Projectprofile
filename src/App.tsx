@@ -5,8 +5,6 @@ import { MdOutlineAutoGraph } from 'react-icons/md';
 
 import Dock from './components/Dock/Dock';
 import Lanyard from './components/Lanyard/Lanyard';
-import Particles from './components/Particles/Particles';
-import TextType from './components/TextType/TextType';
 import BorderGlow from './components/BorderGlow/BorderGlow';
 import MagicBento from './components/MagicBento/MagicBento';
 import SkillColorStack from './components/SkillColorStack/SkillColorStack';
@@ -174,19 +172,6 @@ function App() {
           pointerEvents: loaded ? 'auto' : 'none',
         }}
       >
-        <Particles
-          className="particles-bg"
-          particleColors={['#f8fafc', '#cbd5e1', '#94a3b8']}
-          particleCount={70}
-          particleSpread={10}
-          speed={0.08}
-          particleBaseSize={85}
-          moveParticlesOnHover={false}
-          alphaParticles={false}
-          disableRotation={false}
-          pixelRatio={1}
-        />
-
         {/* HERO SECTION */}
         <section className="hero-frame" id="home">
           <Lanyard
@@ -209,35 +194,11 @@ function App() {
             {/* Availability / Status Badge */}
             <StatusBadge statusText="Available for Data Science & ML Opportunities" />
 
-            <TextType
-              className="hero"
-              text={['Mushke Rohith Reddy']}
-              typingSpeed={30}
-              initialDelay={800}
-              pauseDuration={1000}
-              showCursor
-              cursorCharacter="|"
-              deletingSpeed={0}
-              variableSpeed={{ min: 40, max: 90 }}
-              cursorBlinkDuration={0.55}
-              loop={false}
-            />
-
-            <TextType
-              className="hero-subtext"
-              text={[
-                'Data Science undergraduate with experience in developing and deploying machine learning solutions, including NLP-based classification and recommendation systems. Proficient in Python, data analysis, and model building, with a focus on real-world applications and scalable solutions.',
-              ]}
-              typingSpeed={25}
-              initialDelay={3200}
-              pauseDuration={3200}
-              showCursor
-              cursorCharacter="|"
-              deletingSpeed={0}
-              variableSpeed={{ min: 35, max: 75 }}
-              cursorBlinkDuration={0.55}
-              loop={false}
-            />
+            <h1 className="hero">Mushke Rohith Reddy</h1>
+            <p className="hero-subtext">
+              Data science undergraduate building practical machine learning tools, from NLP classification to
+              recommendation systems. Focused on Python, careful analysis, and models that solve real problems.
+            </p>
 
             {/* Clean Minimal GitHub Stats Pill */}
             <BorderGlow
@@ -301,102 +262,42 @@ function App() {
 
         {/* PROJECTS SECTION */}
         <div className="Projects" id="projects">
-          <TextType
-            className="heading"
-            text={['Projects']}
-            typingSpeed={10}
-            initialDelay={600}
-            pauseDuration={1000}
-            showCursor
-            cursorCharacter="|"
-            variableSpeed={{ min: 40, max: 90 }}
-            cursorBlinkDuration={0.55}
-            loop={false}
-            startOnVisible
-          />
+          <h2 className="heading">Selected work</h2>
 
           <MagicBento
-            enableStars={true}
-            enableSpotlight={true}
-            enableBorderGlow={true}
-            enableTilt={true}
-            enableMagnetism={true}
-            clickEffect={true}
+            enableStars={false}
+            enableSpotlight={false}
+            enableBorderGlow={false}
+            enableTilt={false}
+            enableMagnetism={false}
+            clickEffect={false}
             spotlightRadius={320}
             particleCount={12}
-            glowColor="56, 189, 248"
+            glowColor="181, 151, 103"
           />
         </div>
 
         {/* SKILLS SECTION */}
         <div className="skills" id="skills">
-          <TextType
-            className="heading"
-            text={['Skills']}
-            typingSpeed={10}
-            initialDelay={600}
-            pauseDuration={1000}
-            showCursor
-            cursorCharacter="|"
-            variableSpeed={{ min: 40, max: 90 }}
-            cursorBlinkDuration={0.55}
-            loop={false}
-            startOnVisible
-          />
+          <h2 className="heading">Tools I use</h2>
           <SkillColorStack />
         </div>
 
         {/* GROWTH JOURNEY SECTION */}
         <section className="growth-journey" id="growth-journey">
-          <TextType
-            className="heading"
-            text={['Growth Journey']}
-            typingSpeed={10}
-            initialDelay={600}
-            pauseDuration={1000}
-            showCursor
-            cursorCharacter="|"
-            variableSpeed={{ min: 40, max: 90 }}
-            cursorBlinkDuration={0.55}
-            loop={false}
-            startOnVisible
-          />
+          <h2 className="heading">A little context</h2>
           <GrowthJourney />
         </section>
 
         {/* ACHIEVEMENTS SECTION */}
         <section className="achievements" id="achievements">
-          <TextType
-            className="heading"
-            text={['Achievements']}
-            typingSpeed={10}
-            initialDelay={600}
-            pauseDuration={1000}
-            showCursor
-            cursorCharacter="|"
-            variableSpeed={{ min: 40, max: 90 }}
-            cursorBlinkDuration={0.55}
-            loop={false}
-            startOnVisible
-          />
+          <h2 className="heading">Milestones</h2>
           <AchievementStack />
         </section>
 
         {/* CONTACT SECTION WITH MODERN INTERACTIVE HUB */}
         <section className="contact" id="contact">
-          <TextType
-            className="heading"
-            text={['Get In Touch']}
-            typingSpeed={10}
-            initialDelay={600}
-            pauseDuration={1000}
-            showCursor
-            cursorCharacter="|"
-            variableSpeed={{ min: 40, max: 90 }}
-            cursorBlinkDuration={0.55}
-            loop={false}
-            startOnVisible
-          />
+          <h2 className="heading">Start a conversation</h2>
 
           <ContactSection onShowToast={showToast} />
         </section>
