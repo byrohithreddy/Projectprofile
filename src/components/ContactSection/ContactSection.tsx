@@ -7,7 +7,6 @@ import {
   HiExternalLink,
   HiEye,
   HiArrowRight,
-  HiSparkles,
 } from 'react-icons/hi';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import {
@@ -70,11 +69,11 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
       {/* Subtitle Banner */}
       <div className="contact-header-info">
         <p className="contact-lead-text">
-          Have an exciting role, a machine learning problem, or a project in mind? Let’s talk.
+          For roles, research, or a thoughtful project collaboration.
         </p>
         <div className="contact-status-pills">
           <span className="contact-pill">
-            <span className="contact-pill-dot" /> Open for Data Science & ML Roles
+            <span className="contact-pill-dot" aria-hidden="true" /> Available for data science and ML roles
           </span>
         </div>
       </div>
@@ -83,21 +82,22 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
         {/* LEFT COLUMN: Interactive Message Composer */}
         <div className="contact-form-card">
           <div className="contact-card-badge">
-            <HiSparkles size={14} /> Quick Connect
+            <span aria-hidden="true">01</span> Write to me
           </div>
-          <h3 className="contact-form-title">Send a Direct Message</h3>
+          <h3 className="contact-form-title">Tell me what you’re working on.</h3>
           <p className="contact-form-subtitle">
-            Fill in your note or pick a topic to instantly initiate a conversation.
+            Choose a subject and leave a short note. Your email app will open with the message ready to send.
           </p>
 
           <form onSubmit={handleSendMessage} className="contact-form">
             <div className="contact-topics">
-              <label className="contact-field-label">Select Purpose</label>
+              <label className="contact-field-label">What brings you here?</label>
               <div className="contact-topic-chips">
                 {TOPICS.map((topic) => (
                   <button
                     key={topic}
                     type="button"
+                    aria-pressed={selectedTopic === topic}
                     className={`contact-topic-chip ${
                       selectedTopic === topic ? 'contact-topic-chip--active' : ''
                     }`}
@@ -112,7 +112,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
             <div className="contact-form-row">
               <div className="contact-field-group">
                 <label className="contact-field-label" htmlFor="contact-name">
-                  Your Name
+                  Your name
                 </label>
                 <input
                   id="contact-name"
@@ -127,7 +127,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
 
               <div className="contact-field-group">
                 <label className="contact-field-label" htmlFor="contact-email">
-                  Your Email
+                  Your email
                 </label>
                 <input
                   id="contact-email"
@@ -143,7 +143,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
 
             <div className="contact-field-group">
               <label className="contact-field-label" htmlFor="contact-message">
-                Message / Brief
+                A few details
               </label>
               <textarea
                 id="contact-message"
@@ -157,13 +157,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
             </div>
 
             <button type="submit" className="contact-submit-btn">
-              <span>Compose & Send Message</span>
+              <span>Continue to email</span>
               <HiArrowRight size={18} />
             </button>
           </form>
         </div>
 
-        {/* RIGHT COLUMN: Executive Direct Hub & Resume */}
+        {/* Direct contact and supporting links */}
         <div className="contact-hub-cards">
           {/* CARD 1: RESUME SHOWCASE */}
           <div className="contact-hub-card contact-hub-card--resume">
@@ -172,8 +172,8 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                 <HiDocumentText size={24} />
               </div>
               <div className="contact-hub-title-group">
-                <div className="contact-hub-tag">CURRICULUM VITAE</div>
-                <h4 className="contact-hub-title">Download or Preview Resume</h4>
+                <div className="contact-hub-tag">Résumé</div>
+                <h4 className="contact-hub-title">Experience and selected work</h4>
               </div>
             </div>
 
@@ -188,7 +188,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                 onClick={() => setIsResumeOpen(true)}
               >
                 <HiEye size={16} />
-                <span>Live Preview</span>
+                <span>Preview</span>
               </button>
 
               <a
@@ -198,7 +198,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                 className="contact-action-btn contact-action-btn--external"
               >
                 <HiExternalLink size={16} />
-                <span>Open in Tab</span>
+                <span>Open PDF</span>
               </a>
             </div>
           </div>
@@ -210,13 +210,13 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                 <HiMail size={24} />
               </div>
               <div className="contact-hub-title-group">
-                <div className="contact-hub-tag">PRIMARY INBOX</div>
+                <div className="contact-hub-tag">Email</div>
                 <h4 className="contact-hub-title">{EMAIL_ADDRESS}</h4>
               </div>
             </div>
 
             <p className="contact-hub-desc">
-              Preferred contact channel for recruiters, opportunities, and discussions.
+              Best for opportunities, questions, and project conversations.
             </p>
 
             <div className="contact-resume-actions">
@@ -226,7 +226,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
                 onClick={handleCopyEmail}
               >
                 {copiedEmail ? <HiCheck size={16} color="#10b981" /> : <HiClipboardCopy size={16} />}
-                <span>{copiedEmail ? 'Copied Address!' : 'Copy Email'}</span>
+                <span>{copiedEmail ? 'Address copied' : 'Copy email'}</span>
               </button>
 
               <a

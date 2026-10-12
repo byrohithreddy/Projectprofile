@@ -3,9 +3,9 @@ import { ACHIEVEMENTS } from '../../data/portfolioData';
 
 function AchievementStack() {
   return (
-    <div className="achievement-stack">
+    <ol className="achievement-stack">
       {ACHIEVEMENTS.map((achievement) => (
-        <article className="achievement-stack__card" key={achievement.title}>
+        <li className="achievement-stack__card" key={achievement.title}>
           <div className="achievement-stack__content">
             <div className="achievement-stack__eyebrow">{achievement.label}</div>
             <h3 className="achievement-stack__title">{achievement.title}</h3>
@@ -25,11 +25,11 @@ function AchievementStack() {
               loading="lazy"
               decoding="async"
             />
-            <span className="achievement-stack__cta">Highlights ↗</span>
+            <span className="achievement-stack__cta">View story <span aria-hidden="true">↗</span></span>
           </a>
-        </article>
+        </li>
       ))}
-    </div>
+    </ol>
   );
 }
 

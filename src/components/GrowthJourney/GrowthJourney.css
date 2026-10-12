@@ -1,223 +1,107 @@
 .growth-journey {
   width: 100%;
-  padding: 4rem 1rem 7rem;
   position: relative;
   z-index: 10;
 }
 
 .growth-timeline {
-  position: relative;
-  width: min(100%, 980px);
-  margin: 4rem auto 0;
-  padding: 1rem 0;
-}
-
-.growth-timeline::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 50%;
-  width: 2px;
-  transform: translateX(-50%);
-  background: linear-gradient(
-    to bottom,
-    transparent,
-    rgba(255, 255, 255, 0.35),
-    rgba(255, 255, 255, 0.15),
-    transparent
-  );
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.12);
+  width: min(100%, 1120px);
+  margin: 3.5rem auto 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: journey;
 }
 
 .growth-timeline__item {
-  position: relative;
   display: grid;
-  grid-template-columns: 1fr 72px 1fr;
-  align-items: center;
-  margin: 0 0 2.25rem;
-}
-
-.growth-timeline__item:last-child {
-  margin-bottom: 0;
+  grid-template-columns: minmax(12rem, 0.7fr) minmax(0, 1.5fr);
+  gap: clamp(1.5rem, 6vw, 7rem);
+  padding: 1.8rem 0 2rem;
+  border-top: 1px solid rgba(240, 238, 232, 0.13);
+  counter-increment: journey;
 }
 
 .growth-timeline__period {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.65rem;
+  color: #c9ad7e;
   font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+}
+
+.growth-timeline__period::before {
+  content: counter(journey, decimal-leading-zero);
+  color: #77786f;
+  font-size: 0.68rem;
+}
+
+.growth-timeline__kind {
+  color: #aaa99f;
+  font-family: 'Outfit', sans-serif;
   font-size: 0.82rem;
   font-weight: 500;
-  line-height: 1.4;
-  color: #94a3b8;
-  letter-spacing: 0.02em;
-}
-
-.growth-timeline__item:nth-child(odd) .growth-timeline__period {
-  text-align: right;
-  padding-right: 1.5rem;
-}
-
-.growth-timeline__item:nth-child(even) .growth-timeline__period {
-  grid-column: 3;
-  grid-row: 1;
-  text-align: left;
-  padding-left: 1.5rem;
-}
-
-.growth-timeline__marker {
-  grid-column: 2;
-  grid-row: 1;
-  position: relative;
-  z-index: 2;
-  width: 50px;
-  height: 50px;
-  margin: 0 auto;
-  display: grid;
-  place-items: center;
-  border-radius: 50%;
-  color: #f8fafc;
-  background: rgba(16, 18, 28, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow:
-    0 0 0 6px rgba(255, 255, 255, 0.04),
-    0 12px 28px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  transition: transform 0.25s ease, border-color 0.25s ease;
-}
-
-.growth-timeline__item:hover .growth-timeline__marker {
-  transform: scale(1.08);
-  border-color: rgba(255, 255, 255, 0.45);
-}
-
-.growth-timeline__card {
-  position: relative;
-  padding: 1.35rem 1.5rem;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: rgba(14, 16, 25, 0.82);
-  box-shadow:
-    0 20px 50px rgba(0, 0, 0, 0.45),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
-}
-
-.growth-timeline__item:nth-child(odd) .growth-timeline__card {
-  grid-column: 3;
-}
-
-.growth-timeline__item:nth-child(even) .growth-timeline__card {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.growth-timeline__card:hover {
-  transform: translateY(-4px);
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow:
-    0 24px 60px rgba(0, 0, 0, 0.55),
-    0 0 20px rgba(255, 255, 255, 0.04);
 }
 
 .growth-timeline__title {
-  margin: 0 0 0.4rem;
-  font-family: Surgena, -apple-system, sans-serif;
-  font-size: 1.25rem;
-  line-height: 1.25;
-  color: #f8fafc;
+  margin: 0 0 0.35rem;
+  color: #f0eee8;
+  font-family: Surgena, Georgia, serif;
+  font-size: clamp(1.45rem, 2.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
 .growth-timeline__meta {
-  margin: 0 0 0.5rem;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.82rem;
-  color: #cbd5e1;
-  font-weight: 500;
+  margin: 0 0 0.7rem;
+  color: #c9ad7e;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
 }
 
 .growth-timeline__detail {
+  max-width: 52rem;
   margin: 0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, sans-serif;
-  font-size: 0.92rem;
-  line-height: 1.6;
-  color: #94a3b8;
+  color: #aaa99f;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  text-wrap: pretty;
 }
 
 @media (max-width: 768px) {
-  .growth-timeline::before {
-    left: 28px;
-    transform: none;
-  }
-
   .growth-timeline__item {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    padding-left: 64px;
-    margin-bottom: 2.5rem;
-  }
-
-  .growth-timeline__marker {
-    position: absolute;
-    left: 4px;
-    top: 0;
-    width: 44px;
-    height: 44px;
-    margin: 0;
+    grid-template-columns: minmax(9rem, 0.55fr) minmax(0, 1.45fr);
+    gap: 1.5rem;
   }
 
   .growth-timeline__period {
-    text-align: left !important;
-    padding: 0 0 0.5rem 0 !important;
-  }
-
-  .growth-timeline__item:nth-child(even) .growth-timeline__period {
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .growth-timeline__card {
-    width: 100%;
-  }
-
-  .growth-timeline__item:nth-child(even) .growth-timeline__card {
-    grid-column: auto;
-    grid-row: auto;
+    font-size: 0.7rem;
   }
 }
 
 @media (max-width: 480px) {
   .growth-timeline {
-    margin-top: 2rem;
-  }
-
-  .growth-timeline::before {
-    left: 20px;
+    margin-top: 2.25rem;
   }
 
   .growth-timeline__item {
-    padding-left: 50px;
-    margin-bottom: 2rem;
-  }
-
-  .growth-timeline__marker {
-    left: 2px;
-    width: 38px;
-    height: 38px;
-  }
-
-  .growth-timeline__card {
-    padding: 1.15rem 1.2rem;
-    border-radius: 18px;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    padding: 1.35rem 0 1.5rem;
   }
 
   .growth-timeline__title {
-    font-size: 1.12rem;
+    font-size: 1.45rem;
   }
 
   .growth-timeline__detail {
-    font-size: 0.88rem;
-    line-height: 1.5;
+    font-size: 0.94rem;
   }
 }
