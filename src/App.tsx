@@ -16,9 +16,9 @@ import StatusBadge from './components/StatusBadge/StatusBadge';
 import Toast from './components/Toast/Toast';
 import ContactSection from './components/ContactSection/ContactSection';
 
-import frontImage from './assets/frontImage.png';
-import backImage from './assets/backImage.png';
-import lanyardStrap from './assets/lanyard.png';
+import frontImage from './assets/profile/frontImage.png';
+import backImage from './assets/profile/backImage.png';
+import lanyardStrap from './assets/profile/lanyard.png';
 
 import {
   GITHUB_USERNAME,

@@ -16,16 +16,13 @@ body,
   src:
     local('Surgena'),
     local('surgena'),
-    url('./fonts/Surgena.woff2') format('woff2'),
-    url('./fonts/Surgena.woff') format('woff'),
-    url('./fonts/Surgena.ttf') format('truetype'),
-    url('./fonts/Surgena.otf') format('opentype');
+    url('./assets/fonts/Surgena.ttf') format('truetype');
   font-display: swap;
 }
 
 @font-face {
   font-family: 'Game';
-  src: url('./fonts/Game.ttf') format('truetype');
+  src: url('./assets/fonts/Game.ttf') format('truetype');
   font-display: swap;
 }
 

@@ -1,30 +1,31 @@
-import gateImg from '../assets/gate.png';
-import githubImg from '../assets/github.png';
-import linkedinImg from '../assets/linkdin.png';
-import mailImg from '../assets/mail.png';
-import movieImg from '../assets/movie.png';
-import PIImg from '../assets/pi.png';
-import newsImg from '../assets/news.png';
-import resumeImg from '../assets/resume.png';
-import startImg from '../assets/start.jpg';
-import gdgImg from '../assets/gdg.jpeg';
-import blitzImg from '../assets/blitz.jpg';
+import gateImg from '../assets/projects/gate.png';
+import PIImg from '../assets/projects/pi.png';
+import newsImg from '../assets/projects/news.png';
+import IRONImg from '../assets/projects/ir.png';
 
-import cssImg from '../assets/css.png';
-import IRONImg from '../assets/ir.png';
-import gitImg from '../assets/git.png';
-import htmlImg from '../assets/html.png';
-import javaImg from '../assets/java.png';
-import javascriptImg from '../assets/javascript.png';
-import jupyterImg from '../assets/jupyte.png';
-import linuxImg from '../assets/linux.png';
-import mongodbImg from '../assets/mongoDB.png';
-import powerbiImg from '../assets/powerbi.png';
-import pythonImg from '../assets/python.png';
-import reactImg from '../assets/react.png';
-import sqlImg from '../assets/sql.png';
-import vscodeImg from '../assets/vscode.png';
-import resumePdf from '../assets/cv.pdf';
+import githubImg from '../assets/contact/github.png';
+import linkedinImg from '../assets/contact/linkdin.png';
+import mailImg from '../assets/contact/mail.png';
+import resumeImg from '../assets/contact/resume.png';
+import resumePdf from '../assets/contact/cv.pdf';
+
+import startImg from '../assets/achievements/start.jpg';
+import gdgImg from '../assets/achievements/gdg.jpeg';
+import blitzImg from '../assets/achievements/blitz.jpg';
+
+import cssImg from '../assets/skills/css.png';
+import gitImg from '../assets/skills/git.png';
+import htmlImg from '../assets/skills/html.png';
+import javaImg from '../assets/skills/java.png';
+import javascriptImg from '../assets/skills/javascript.png';
+import jupyterImg from '../assets/skills/jupyte.png';
+import linuxImg from '../assets/skills/linux.png';
+import mongodbImg from '../assets/skills/mongoDB.png';
+import powerbiImg from '../assets/skills/powerbi.png';
+import pythonImg from '../assets/skills/python.png';
+import reactImg from '../assets/skills/react.png';
+import sqlImg from '../assets/skills/sql.png';
+import vscodeImg from '../assets/skills/vscode.png';
 
 export const GITHUB_USERNAME = 'byrohithreddy';
 export const EMAIL_ADDRESS = 'rohith2005hyd@gmail.com';

@@ -80,7 +80,7 @@ const ParticleCard: React.FC<{
   enableTilt?: boolean;
   clickEffect?: boolean;
   enableMagnetism?: boolean;
-  githubUrl?: string;
+  liveUrl?: string;
 }> = ({
   children,
   className = '',
@@ -91,7 +91,7 @@ const ParticleCard: React.FC<{
   enableTilt = true,
   clickEffect = true,
   enableMagnetism = true,
-  githubUrl,
+  liveUrl,
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const particlesRef = useRef<HTMLDivElement[]>([]);
@@ -289,9 +289,8 @@ const ParticleCard: React.FC<{
         );
       }
 
-      // Redirect to the GitHub repo as requested
-      if (githubUrl) {
-        window.open(githubUrl, '_blank', 'noopener,noreferrer');
+      if (liveUrl) {
+        window.open(liveUrl, '_blank', 'noopener,noreferrer');
       }
     };
 
@@ -308,7 +307,7 @@ const ParticleCard: React.FC<{
       element.removeEventListener('click', handleClick);
       clearAllParticles();
     };
-  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, githubUrl]);
+  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, liveUrl]);
 
   return (
     <div
@@ -318,9 +317,9 @@ const ParticleCard: React.FC<{
       role="link"
       tabIndex={0}
       onKeyDown={(e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && githubUrl) {
+        if ((e.key === 'Enter' || e.key === ' ') && liveUrl) {
           e.preventDefault();
-          window.open(githubUrl, '_blank', 'noopener,noreferrer');
+          window.open(liveUrl, '_blank', 'noopener,noreferrer');
         }
       }}
     >
@@ -528,7 +527,7 @@ export const MagicBento: React.FC<BentoProps> = ({
             style: {
               '--glow-color': glowColor,
             } as React.CSSProperties,
-            githubUrl: project.github,
+            liveUrl: project.live,
           };
 
           return (
