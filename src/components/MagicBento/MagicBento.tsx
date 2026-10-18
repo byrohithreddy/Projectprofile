@@ -80,7 +80,7 @@ const ParticleCard: React.FC<{
   enableTilt?: boolean;
   clickEffect?: boolean;
   enableMagnetism?: boolean;
-  liveUrl?: string;
+  liveUrl: string;
 }> = ({
   children,
   className = '',
@@ -93,13 +93,58 @@ const ParticleCard: React.FC<{
   enableMagnetism = true,
   liveUrl,
 }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLAnchorElement>(null);
   const particlesRef = useRef<HTMLDivElement[]>([]);
   const timeoutsRef = useRef<ReturnType<typeof setTimeout>[]>([]);
   const isHoveredRef = useRef(false);
   const memoizedParticles = useRef<HTMLDivElement[]>([]);
   const particlesInitialized = useRef(false);
   const magnetismAnimationRef = useRef<gsap.core.Tween | null>(null);
+
+  useEffect(() => {
+    const element = cardRef.current;
+    if (!clickEffect || !element) return;
+
+    const handleClick = (event: MouseEvent) => {
+      const rect = element.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const maxDistance = Math.max(
+        Math.hypot(x, y),
+        Math.hypot(x - rect.width, y),
+        Math.hypot(x, y - rect.height),
+        Math.hypot(x - rect.width, y - rect.height)
+      );
+      const ripple = document.createElement('div');
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${maxDistance * 2}px;
+        height: ${maxDistance * 2}px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(${glowColor}, 0.45) 0%, rgba(${glowColor}, 0.2) 35%, transparent 70%);
+        left: ${x - maxDistance}px;
+        top: ${y - maxDistance}px;
+        pointer-events: none;
+        z-index: 1000;
+      `;
+
+      element.appendChild(ripple);
+      gsap.fromTo(
+        ripple,
+        { scale: 0, opacity: 1 },
+        {
+          scale: 1,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power2.out',
+          onComplete: () => ripple.remove(),
+        }
+      );
+    };
+
+    element.addEventListener('click', handleClick);
+    return () => element.removeEventListener('click', handleClick);
+  }, [clickEffect, glowColor]);
 
   const initializeParticles = useCallback(() => {
     if (particlesInitialized.current || !cardRef.current) return;
@@ -248,83 +293,30 @@ const ParticleCard: React.FC<{
       }
     };
 
-    const handleClick = (e: MouseEvent) => {
-      if (clickEffect) {
-        const rect = element.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const maxDistance = Math.max(
-          Math.hypot(x, y),
-          Math.hypot(x - rect.width, y),
-          Math.hypot(x, y - rect.height),
-          Math.hypot(x - rect.width, y - rect.height)
-        );
-
-        const ripple = document.createElement('div');
-        ripple.style.cssText = `
-          position: absolute;
-          width: ${maxDistance * 2}px;
-          height: ${maxDistance * 2}px;
-          border-radius: 50%;
-          background: radial-gradient(circle, rgba(${glowColor}, 0.45) 0%, rgba(${glowColor}, 0.2) 35%, transparent 70%);
-          left: ${x - maxDistance}px;
-          top: ${y - maxDistance}px;
-          pointer-events: none;
-          z-index: 1000;
-        `;
-
-        element.appendChild(ripple);
-
-        gsap.fromTo(
-          ripple,
-          { scale: 0, opacity: 1 },
-          {
-            scale: 1,
-            opacity: 0,
-            duration: 0.7,
-            ease: 'power2.out',
-            onComplete: () => ripple.remove(),
-          }
-        );
-      }
-
-      if (liveUrl) {
-        window.open(liveUrl, '_blank', 'noopener,noreferrer');
-      }
-    };
-
     element.addEventListener('mouseenter', handleMouseEnter);
     element.addEventListener('mouseleave', handleMouseLeave);
     element.addEventListener('mousemove', handleMouseMove);
-    element.addEventListener('click', handleClick);
 
     return () => {
       isHoveredRef.current = false;
       element.removeEventListener('mouseenter', handleMouseEnter);
       element.removeEventListener('mouseleave', handleMouseLeave);
       element.removeEventListener('mousemove', handleMouseMove);
-      element.removeEventListener('click', handleClick);
       clearAllParticles();
     };
-  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism, clickEffect, glowColor, liveUrl]);
+  }, [animateParticles, clearAllParticles, disableAnimations, enableTilt, enableMagnetism]);
 
   return (
-    <div
+    <a
       ref={cardRef}
       className={`${className} particle-container`}
+      href={liveUrl}
+      target="_blank"
+      rel="noopener noreferrer"
       style={{ ...style, position: 'relative', overflow: 'hidden' }}
-      role="link"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if ((e.key === 'Enter' || e.key === ' ') && liveUrl) {
-          e.preventDefault();
-          window.open(liveUrl, '_blank', 'noopener,noreferrer');
-        }
-      }}
     >
       {children}
-    </div>
+    </a>
   );
 };
 
