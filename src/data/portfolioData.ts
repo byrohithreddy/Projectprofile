@@ -102,16 +102,6 @@ export const PROJECTS: Project[] = [
     highlight: 'Zero Fees UPI',
   },
   {
-    title: 'Fake News Detector (NLP)',
-    github: 'https://github.com/byrohithreddy/Fake_news_detector_NLP',
-    live: 'https://byrohithreddy-fake-news-detector.hf.space/',
-    desc: 'NLP classifier using TF-IDF, Logistic Regression & Random Forest achieving 85%+ accuracy. Features an interactive Gradio interface for real-time predictions with a complete preprocessing pipeline.',
-    tags: ['Python', 'NLP', 'Gradio', 'ML', 'TF-IDF'],
-    image: newsImg,
-    category: 'Machine Learning • NLP',
-    highlight: '85%+ Accuracy',
-  },
-  {
     title: 'E-Gatepass Management System',
     github: 'https://github.com/byrohithreddy/Epass-management-system',
     live: 'https://byrohithreddy.github.io/Epass-management-system/',
@@ -120,6 +110,16 @@ export const PROJECTS: Project[] = [
     image: gateImg,
     category: 'Full-Stack & Security',
     highlight: 'Role-Based Access',
+  },
+  {
+    title: 'Fake News Detector (NLP)',
+    github: 'https://github.com/byrohithreddy/Fake_news_detector_NLP',
+    live: 'https://byrohithreddy-fake-news-detector.hf.space/',
+    desc: 'NLP classifier using TF-IDF, Logistic Regression & Random Forest achieving 85%+ accuracy. Features an interactive Gradio interface for real-time predictions with a complete preprocessing pipeline.',
+    tags: ['Python', 'NLP', 'Gradio', 'ML', 'TF-IDF'],
+    image: newsImg,
+    category: 'Machine Learning • NLP',
+    highlight: '85%+ Accuracy',
   },
 ];
 
