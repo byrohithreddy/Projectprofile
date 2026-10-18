@@ -92,6 +92,16 @@ export const PROJECTS: Project[] = [
     highlight: '1500 students, 50+ companies',
   },
   {
+    title: 'Free Payment Interface',
+    github: 'https://github.com/byrohithreddy/Free-pi',
+    live: 'https://free-pi.pages.dev/',
+    desc: 'Free, developer-friendly UPI orchestration for Indian merchants with zero transaction fees. Fast-tracked payment verification and collection system.',
+    tags: ['React', 'Node.js', 'FinTech', 'Full-Stack'],
+    image: PIImg,
+    category: 'FinTech Infrastructure',
+    highlight: 'Zero Fees UPI',
+  },
+  {
     title: 'Fake News Detector (NLP)',
     github: 'https://github.com/byrohithreddy/Fake_news_detector_NLP',
     live: 'https://byrohithreddy-fake-news-detector.hf.space/',
@@ -110,16 +120,6 @@ export const PROJECTS: Project[] = [
     image: gateImg,
     category: 'Full-Stack & Security',
     highlight: 'Role-Based Access',
-  },
-  {
-    title: 'Free Payment Interface',
-    github: 'https://github.com/byrohithreddy/Free-pi',
-    live: 'https://free-pi.pages.dev/',
-    desc: 'Free, developer-friendly UPI orchestration for Indian merchants with zero transaction fees. Fast-tracked payment verification and collection system.',
-    tags: ['React', 'Node.js', 'FinTech', 'Full-Stack'],
-    image: PIImg,
-    category: 'FinTech Infrastructure',
-    highlight: 'Zero Fees UPI',
   },
 ];
 
