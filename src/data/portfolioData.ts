@@ -3,10 +3,6 @@ import PIImg from '../assets/projects/pi.png';
 import newsImg from '../assets/projects/news.png';
 import IRONImg from '../assets/projects/ir.png';
 
-import githubImg from '../assets/contact/github.png';
-import linkedinImg from '../assets/contact/linkdin.png';
-import mailImg from '../assets/contact/mail.png';
-import resumeImg from '../assets/contact/resume.png';
 import resumePdf from '../assets/contact/cv.pdf';
 
 import startImg from '../assets/achievements/start.jpg';
@@ -32,42 +28,6 @@ export const EMAIL_ADDRESS = 'rohith2005hyd@gmail.com';
 export const RESUME_URL = resumePdf;
 export const LINKEDIN_URL = 'https://www.linkedin.com/in/mushkerohithreddy';
 export const GITHUB_URL = 'https://github.com/byrohithreddy';
-
-export interface ContactLink {
-  label: string;
-  value: string;
-  href: string;
-  image: string;
-  isEmail?: boolean;
-}
-
-export const CONTACT_LINKS: ContactLink[] = [
-  {
-    label: 'rohith2005hyd@gmail.com',
-    value: 'Click to copy email',
-    href: 'mailto:rohith2005hyd@gmail.com',
-    image: mailImg,
-    isEmail: true,
-  },
-  {
-    label: '.in/mushkerohithreddy',
-    value: 'Professional updates',
-    href: LINKEDIN_URL,
-    image: linkedinImg,
-  },
-  {
-    label: 'byrohithreddy',
-    value: `github.com/${GITHUB_USERNAME}`,
-    href: GITHUB_URL,
-    image: githubImg,
-  },
-  {
-    label: 'Resume',
-    value: 'View resume',
-    href: RESUME_URL,
-    image: resumeImg,
-  },
-];
 
 export interface Project {
   title: string;

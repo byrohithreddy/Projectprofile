@@ -7,6 +7,7 @@ import {
   HiExternalLink,
   HiEye,
   HiArrowRight,
+  HiDownload,
 } from 'react-icons/hi';
 import { FaLinkedin, FaGithub } from 'react-icons/fa';
 import {
@@ -16,7 +17,6 @@ import {
   GITHUB_URL,
   GITHUB_USERNAME,
 } from '../../data/portfolioData';
-import ResumeModal from '../ResumeModal/ResumeModal';
 import './ContactSection.css';
 
 interface ContactSectionProps {
@@ -30,7 +30,6 @@ const TOPICS = [
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) => {
   const [copiedEmail, setCopiedEmail] = useState(false);
-  const [isResumeOpen, setIsResumeOpen] = useState(false);
 
   // Quick message form state
   const [name, setName] = useState('');
@@ -63,9 +62,6 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
 
   return (
     <div className="contact-section-container">
-      {/* Resume Viewer Modal */}
-      <ResumeModal isOpen={isResumeOpen} onClose={() => setIsResumeOpen(false)} />
-
       {/* Subtitle Banner */}
       <div className="contact-header-info">
         <p className="contact-lead-text">
@@ -182,23 +178,25 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ onShowToast }) =
             </p>
 
             <div className="contact-resume-actions">
-              <button
-                type="button"
-                className="contact-action-btn contact-action-btn--preview"
-                onClick={() => setIsResumeOpen(true)}
-              >
-                <HiEye size={16} />
-                <span>Preview</span>
-              </button>
-
               <a
                 href={RESUME_URL}
                 target="_blank"
                 rel="noreferrer"
-                className="contact-action-btn contact-action-btn--external"
+                className="contact-action-btn contact-action-btn--preview"
+                title="Preview resume in new tab"
               >
-                <HiExternalLink size={16} />
-                <span>Open PDF</span>
+                <HiEye size={16} />
+                <span>Preview</span>
+              </a>
+
+              <a
+                href={RESUME_URL}
+                download="Mushke_Rohith_Reddy_Resume.pdf"
+                className="contact-action-btn contact-action-btn--download"
+                title="Download resume PDF directly"
+              >
+                <HiDownload size={16} />
+                <span>Download PDF</span>
               </a>
             </div>
           </div>

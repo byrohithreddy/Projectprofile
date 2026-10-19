@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import LoadingScreen from './components/LoadingScreen/LoadingScreen';
-import { VscCode, VscHome, VscVscodeInsiders, VscHistory, VscGraph, VscMail } from 'react-icons/vsc';
+import { VscCode, VscHome, VscHistory, VscGraph, VscMail } from 'react-icons/vsc';
 import { MdOutlineAutoGraph } from 'react-icons/md';
 
 import Dock from './components/Dock/Dock';
@@ -10,7 +10,6 @@ import MagicBento from './components/MagicBento/MagicBento';
 import SkillColorStack from './components/SkillColorStack/SkillColorStack';
 import GrowthJourney from './components/GrowthJourney/GrowthJourney';
 import AchievementStack from './components/AchievementStack/AchievementStack';
-import TiltedCard from './components/TiltedCard/TiltedCard';
 import ProgressBar from './components/ProgressBar/ProgressBar';
 import StatusBadge from './components/StatusBadge/StatusBadge';
 import Toast from './components/Toast/Toast';
@@ -20,12 +19,7 @@ import frontImage from './assets/profile/frontImage.png';
 import backImage from './assets/profile/backImage.png';
 import lanyardStrap from './assets/profile/lanyard.png';
 
-import {
-  GITHUB_USERNAME,
-  EMAIL_ADDRESS,
-  CONTACT_LINKS,
-  PROJECTS,
-} from './data/portfolioData';
+import { GITHUB_USERNAME } from './data/portfolioData';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -101,20 +95,6 @@ function App() {
     }, 3200);
     return () => clearTimeout(timer);
   }, []);
-
-  const handleCopyEmail = useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(EMAIL_ADDRESS).then(() => {
-          showToast(`Copied to clipboard: ${EMAIL_ADDRESS}`);
-        });
-      } else {
-        showToast(`Email: ${EMAIL_ADDRESS}`);
-      }
-    },
-    [showToast],
-  );
 
   const digits = repos !== null ? repos.toString().padStart(3, '0').split('') : ['0', '1', '2'];
 
